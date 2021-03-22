@@ -1,0 +1,33 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+cmd/vulcan-reports-generator/vulcan-reports-generator
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+
+.idea/
+vendor
+
+# VIM
+*.swp
+*.swo
+
+# MacOS
+.DS_Store
+
+# npm (used to install postman)
+node_modules
+package-lock.json
+build
+
+_build/files/opt/vulcan-reports-generator/generators/scan/output/*
+!_build/files/opt/vulcan-reports-generator/generators/scan/output/.keep

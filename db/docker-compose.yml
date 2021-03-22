@@ -1,0 +1,30 @@
+# Copyright 2021 Adevinta
+
+version: "2"
+
+services:
+    vulcan-reportgen-db:
+        container_name: vulcan-reportgen-db
+        image: postgres:10.9
+        command: "postgres -c log_connections=true -c log_min_duration_statement=0"
+        ports:
+            - "5438:5432"
+        expose:
+            - "5438"
+        volumes:
+            - /var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=vulcan_reportgen
+            - POSTGRES_PASSWORD=vulcan_reportgen
+            - POSTGRES_DB=vulcan_reportgen
+    pgadmin:
+        container_name: pgadmin
+        image: dpage/pgadmin4
+        ports:
+            - "8000:80"
+            - "8443:443"
+        links:
+            - vulcan-reportgen-db
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=vulcan_reportgen
+            - PGADMIN_DEFAULT_PASSWORD=vulcan_reportgen

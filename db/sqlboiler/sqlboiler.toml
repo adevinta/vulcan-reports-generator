@@ -1,0 +1,15 @@
+no-auto-timestamps = true
+no-hooks = true
+no-tests = true
+pkgname = "storage"
+output = "sqlboiler/gen"
+add-global-variants = true
+
+[psql]
+host = "localhost"
+dbname = "vulcan_reportgen"
+user = "vulcan_reportgen"
+pass = "vulcan_reportgen"
+port = 5438
+sslmode = "disable"
+blacklist = ["flyway_schema_history"]

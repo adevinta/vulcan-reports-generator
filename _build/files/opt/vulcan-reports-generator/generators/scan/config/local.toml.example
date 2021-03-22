@@ -1,0 +1,32 @@
+[analytics]
+ga_id = ""
+
+[s3]
+upload = false
+private_bucket = "vulcan-insights-abcdefghij"
+public_bucket = "public-vulcan-insights-abcdefghij"
+
+[persistence]
+endpoint = "https://scanengine.vulcan.example.com/"
+
+[results]
+endpoint = "https://results.vulcan.example.com/"
+
+[proxy]
+endpoint = "https://insights.vulcan.example.com/"
+
+[general]
+resources_path = "../../_build/files/opt/vulcan-reports-generator/generators/scan/resources"
+local_temp_dir = "../../_build/files/opt/vulcan-reports-generator/generators/scan/output"
+company_name = "Adevinta"
+support_email = "support@vulcan.example.com"
+contact_email = "vulcan@vulcan.example.com"
+contact_channel = ""
+documentation_link = ""
+roadmap_link = ""
+jira = ""
+
+[endpoints]
+vulcan_ui   = "https://www.vulcan.example.com/"
+view_report     = "www.vulcan.example.com/api/v1/report?team_id=%s&scan_id=%s"
+redirect_url = ""

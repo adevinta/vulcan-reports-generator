@@ -1,0 +1,46 @@
+[log]
+# log levels: panic, fatal, error, warn, info, debug, trace
+level ="debug"
+# indicates if method caller must be logged
+add_caller = false
+
+[api]
+port = 8080
+
+[db]
+dialect = "postgres"
+host = "localhost"
+port = "5438"
+user = "vulcan_reportgen"
+password = "vulcan_reportgen"
+sslmode = "disable"
+name = "vulcan_reportgen"
+
+[sqs]
+number_of_processors = 50
+wait_time = 20
+timeout = 30
+queue_arn = "arn:aws:sqs:xxx:123456789012:yyy"
+
+[ses]
+region = "xxx"
+from = "vulcan@vulcan.example.com"
+cc = []
+
+[generators]
+
+    [generators.scan]
+    # printer_cfg_file is the cfg file
+    # to pass on to secoverview library.
+    printer_cfg_file = "../../_build/files/opt/vulcan-reports-generator/generators/scan/config/local.toml"
+    email_subject = "[Test] Security Overview"
+    # WARNING: Following parameters must match the ones
+    # specified in the security overview config file.
+    output_dir = "../../_build/files/opt/vulcan-reports-generator/generators/scan/output"
+    public_bucket = "public-vulcan-insights-abcdefghij"
+    private_bucket = "vulcan-insights-abcdfeghij"
+
+
+    [generators.livereport]
+    email_subject = "[Test] Live Report"
+    email_template_file = '../../_build/files/opt/vulcan-reports-generator/generators/livereport/resources/template'

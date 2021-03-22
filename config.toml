@@ -1,0 +1,91 @@
+[log]
+# log levels: panic, fatal, error, warn, info, debug, trace
+level ="$LOG_LEVEL"
+# indicates if method caller must be logged
+add_caller = false
+
+[api]
+port = $PORT
+
+[db]
+dialect = "postgres"
+host = "$PG_HOST"
+port = "$PG_PORT"
+user = "$PG_USER"
+password = "$PG_PASSWORD"
+sslmode = "$PG_SSLMODE"
+name = "$PG_NAME"
+
+# name has to be aws3 to not collide with
+# secoverview s3 section when parsing toml
+[aws3]
+region = "$AWS_S3_REGION"
+endpoint = "$AWS_S3_ENDPOINT"
+path_style = $PATH_STYLE
+
+[sqs]
+number_of_processors = 2
+wait_time = 20
+timeout = 3600
+queue_arn = "$SQS_QUEUE_ARN"
+endpoint = "$AWS_SQS_ENDPOINT"
+
+[ses]
+region = "$SES_REGION"
+from = "$SES_FROM"
+cc = $SES_CC
+
+[generators]
+
+    [generators.scan]
+    # printer_cfg_file is the cfg file
+    # to pass on to secoverview library.
+    # This just sets the name of the config file to the name that this file itself
+    # has when is deployed. So the configuration of the security overview is set in
+    # this file on the SECURITY OVERVIEW CONFIG section.
+    printer_cfg_file = "/app/run.toml"
+    email_subject = "$SCAN_EMAIL_SUBJECT"
+    # WARNING: Following parameters must match the ones
+    # specified in the security overview config file.
+    output_dir = "/app/resources//generators/scan/output"
+    public_bucket = "$SCAN_S3_PUBLIC_BUCKET"
+    private_bucket = "$SCAN_S3_PRIVATE_BUCKET"
+
+    [generators.livereport]
+    email_subject = "$LIVEREPORT_EMAIL_SUBJECT"
+    email_template_file = "/app/resources/generators/livereport/resources/template"
+
+###################### SECURITY OVERVIEW CONFIG ##################################
+
+[analytics]
+ga_id = "$SCAN_GA_ID"
+
+[s3]
+upload = false
+private_bucket = "$SCAN_S3_PRIVATE_BUCKET"
+public_bucket = "$SCAN_S3_PUBLIC_BUCKET"
+
+[persistence]
+endpoint = "$PERSISTENCE_ENDPOINT"
+
+[results]
+endpoint = "$RESULTS_ENDPOINT"
+
+[proxy]
+endpoint = "$SCAN_PROXY_ENDPOINT"
+
+[general]
+resources_path = "/app/resources//generators/scan/resources"
+local_temp_dir = "/app/resources//generators/scan/output"
+company_name = "$SCAN_COMPANY_NAME"
+support_email = "$SCAN_SUPPORT_EMAIL"
+contact_email = "$SCAN_CONTACT_EMAIL"
+contact_channel = "$SCAN_CONTACT_CHANNEL"
+jira = "$SCAN_CONTACT_JIRA"
+documentation_link = "$SCAN_DOCS_API_LINK"
+roadmap_link = "$SCAN_DOCS_ROADMAP_LINK"
+
+[endpoints]
+vulcan_ui = "$VULCAN_UI"
+view_report = "$SCAN_VIEW_REPORT"
+redirect_url = "$SCAN_REDIRECT_URL"
