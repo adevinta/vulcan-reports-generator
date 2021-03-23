@@ -8,12 +8,7 @@ cache:
 go_import_path: github.com/adevinta/vulcan-reports-generator
 before_install:
   - rm -rf vendor/github.com/adevinta/security-overview
-before_script:
-  - go mod vendor
-  - go generate -v ./...
-script:
-  - go install -v $(go list ./... | grep -v /vendor/)
-  - go test -v $(go list ./... | grep -v /vendor/)
-  - cd cmd/vulcan-reports-generator && go build && cd ../..
+install: _script/bootstrap
+script: _script/cibuild
 after_success:
   - bash -c 'source <(curl -s https://raw.githubusercontent.com/adevinta/vulcan-cicd/master/docker.sh)'

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Copyright 2021 Adevinta
+
+go mod vendor
+go generate -v ./...
+go install -v $(go list ./... | grep -v /vendor/)
+cd cmd/vulcan-reports-generator && go build && cd ../..

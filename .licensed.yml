@@ -1,0 +1,24 @@
+name: 'Vulcan Reports Generator'
+sources:
+  go: true
+
+source_path: "{.*,**/*}"
+
+allowed:
+  - 0bsd
+  - apache-2.0
+  - bsd-2-clause
+  - bsd-3-clause
+  - isc
+  - mit
+  - wtfpl
+  - zlib
+
+reviewed:
+  go:
+    - golang.org/x/**/*
+    - github.com/friendsofgo/errors
+    - github.com/jmespath/go-jmespath
+    - github.com/russross/blackfriday/v2
+    - github.com/volatiletech/sqlboiler/**/*
+    - github.com/golang/freetype/**/*

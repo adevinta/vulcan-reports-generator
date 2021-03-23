@@ -1,0 +1,23 @@
+---
+name: github.com/golang/freetype/raster
+version: v0.0.0-20170609003504-e2365dfdc4a0
+type: go
+summary: Package raster provides an anti-aliasing 2-D rasterizer.
+homepage: https://godoc.org/github.com/golang/freetype/raster
+license: other
+licenses:
+- sources: freetype@v0.0.0-20170609003504-e2365dfdc4a0/LICENSE
+  text: |
+    Use of the Freetype-Go software is subject to your choice of exactly one of
+    the following two licenses:
+      * The FreeType License, which is similar to the original BSD license with
+        an advertising clause, or
+      * The GNU General Public License (GPL), version 2 or later.
+
+    The text of these licenses are available in the licenses/ftl.txt and the
+    licenses/gpl.txt files respectively. They are also available at
+    http://freetype.sourceforge.net/license.html
+
+    The Luxi fonts in the testdata directory are licensed separately. See the
+    testdata/COPYING file for details.
+notices: []
