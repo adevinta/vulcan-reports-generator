@@ -43,15 +43,11 @@ You can see the full list of FIXED vulnerabilities <a href="{{ .LinkToLiveReport
         <b>FIXED Vulnerabilities</b><br/>
         <i>{{ .StartDate }} - {{ .EndDate }}</i>
     </td>
-    <td style="border:1px solid black;padding:15px">
-        <b>Total</b>
-    </td>
 </tr>
-{{ range .FixedSeverities }}
+{{ range .FixedFindings }}
     <tr style="border:1px solid black">
         <td style="border:1px solid black;padding:15px">{{ .Description }} </td>
-        <td style="border:1px solid black;padding:15px;text-align:right;color:red">{{ .NewFindings }}</td>
-        <td style="border:1px solid black;padding:15px;text-align:right;">{{ .TotalFindings }}</td>
+        <td style="border:1px solid black;padding:15px;text-align:right;color:red">{{ .TotalFixed }}</td>
     </tr>
 {{ end }}
 </table><br>
