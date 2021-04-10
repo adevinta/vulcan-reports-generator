@@ -30,20 +30,25 @@ type liveReportGeneratorCfg struct {
 // data supplied in the generation
 // request for a live report.
 type liveReportRequest struct {
-	TeamID       string `mapstructure:"team_id"`
-	Info         int    `mapstructure:"info"`
-	Low          int    `mapstructure:"low"`
-	Medium       int    `mapstructure:"medium"`
-	High         int    `mapstructure:"high"`
-	Critical     int    `mapstructure:"critical"`
-	InfoDiff     int    `mapstructure:"info_diff"`
-	LowDiff      int    `mapstructure:"low_diff"`
-	MediumDiff   int    `mapstructure:"medium_diff"`
-	HighDiff     int    `mapstructure:"high_diff"`
-	CriticalDiff int    `mapstructure:"critical_diff"`
-	DateFrom     string `mapstructure:"date_from"`
-	DateTo       string `mapstructure:"date_to"`
-	URL          string `mapstructure:"live_report_url"`
+	TeamID        string `mapstructure:"team_id"`
+	Info          int    `mapstructure:"info"`
+	Low           int    `mapstructure:"low"`
+	Medium        int    `mapstructure:"medium"`
+	High          int    `mapstructure:"high"`
+	Critical      int    `mapstructure:"critical"`
+	InfoDiff      int    `mapstructure:"info_diff"`
+	LowDiff       int    `mapstructure:"low_diff"`
+	MediumDiff    int    `mapstructure:"medium_diff"`
+	HighDiff      int    `mapstructure:"high_diff"`
+	CriticalDiff  int    `mapstructure:"critical_diff"`
+	InfoFixed     int    `mapstructure:"info_fixed"`
+	LowFixed      int    `mapstructure:"low_fixed"`
+	MediumFixed   int    `mapstructure:"medium_fixed"`
+	HighFixed     int    `mapstructure:"high_fixed"`
+	CriticalFixed int    `mapstructure:"critical_fixed"`
+	DateFrom      string `mapstructure:"date_from"`
+	DateTo        string `mapstructure:"date_to"`
+	URL           string `mapstructure:"live_report_url"`
 }
 
 type liveReportData struct {
@@ -107,11 +112,16 @@ func (g *liveReportGenerator) Print(teamInfo teamInfo, liveReportReq liveReportR
 		TotalFindings int
 		NewFindings   int
 	}
+	type FixedFinding struct {
+		Description string
+		TotalFixed  int
+	}
 	type Report struct {
 		StartDate        string
 		EndDate          string
 		LinkToLiveReport string
 		Severities       []Severity
+		FixedFindings    []FixedFinding
 	}
 
 	r := Report{
@@ -124,6 +134,13 @@ func (g *liveReportGenerator) Print(teamInfo teamInfo, liveReportReq liveReportR
 			{Description: "Medium", TotalFindings: liveReportReq.Medium, NewFindings: liveReportReq.MediumDiff},
 			{Description: "Low", TotalFindings: liveReportReq.Low, NewFindings: liveReportReq.LowDiff},
 			{Description: "Informational", TotalFindings: liveReportReq.Info, NewFindings: liveReportReq.InfoDiff},
+		},
+		FixedFindings: []FixedFinding{
+			{Description: "Critical", TotalFixed: liveReportReq.CriticalFixed},
+			{Description: "High", TotalFixed: liveReportReq.HighFixed},
+			{Description: "Medium", TotalFixed: liveReportReq.MediumFixed},
+			{Description: "Low", TotalFixed: liveReportReq.LowFixed},
+			{Description: "Informational", TotalFixed: liveReportReq.InfoFixed},
 		},
 	}
 
