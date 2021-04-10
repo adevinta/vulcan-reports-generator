@@ -32,8 +32,6 @@ For detailed information about vulnerabilities, affected assets and suggested ac
 <hr/>
 <h3>Fixed vulnerabilities between {{ .StartDate }} and {{ .EndDate }}</h3>
 <br/>
-You can see the full list of FIXED vulnerabilities <a href="{{ .LinkToLiveReport }}">in the Vulcan Live Report</a></div>.
-<br/><br/>
 <table style="border:1px solid black;border-collapse:collapse">
 <tr style="border:1px solid black">
     <td style="border:1px solid black;padding:15px">
@@ -47,7 +45,7 @@ You can see the full list of FIXED vulnerabilities <a href="{{ .LinkToLiveReport
 {{ range .FixedFindings }}
     <tr style="border:1px solid black">
         <td style="border:1px solid black;padding:15px">{{ .Description }} </td>
-        <td style="border:1px solid black;padding:15px;text-align:right;color:red">{{ .TotalFixed }}</td>
+        <td style="border:1px solid black;padding:15px;text-align:right;color:green">{{ .TotalFixed }}</td>
     </tr>
 {{ end }}
 </table><br>
