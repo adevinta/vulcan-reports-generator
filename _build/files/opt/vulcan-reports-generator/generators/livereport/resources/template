@@ -28,5 +28,28 @@ For detailed information about vulnerabilities, affected assets and suggested ac
     </tr>
 {{ end }}
 </table><br>
+
+<hr/>
+<h3>Fixed vulnerabilities between {{ .StartDate }} and {{ .EndDate }}</h3>
+<br/>
+<table style="border:1px solid black;border-collapse:collapse">
+<tr style="border:1px solid black">
+    <td style="border:1px solid black;padding:15px">
+        <b>Severity</b>
+    </td>
+    <td style="border:1px solid black;padding:15px">
+        <b>FIXED Vulnerabilities</b><br/>
+        <i>{{ .StartDate }} - {{ .EndDate }}</i>
+    </td>
+</tr>
+{{ range .FixedFindings }}
+    <tr style="border:1px solid black">
+        <td style="border:1px solid black;padding:15px">{{ .Description }} </td>
+        <td style="border:1px solid black;padding:15px;text-align:right;color:green">{{ .TotalFixed }}</td>
+    </tr>
+{{ end }}
+</table><br>
+
+
 <i>Copyright © 2020 Adevinta, All rights reserved.<br/>
 You are receiving this email because you signed up for the Adevinta Security Overview.</i>
