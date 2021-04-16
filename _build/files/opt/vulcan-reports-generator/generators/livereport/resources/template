@@ -1,12 +1,11 @@
-<h2>Vulcan Weekly Digest</h2>
-<hr/>
-<h3>Newly discovered vulnerabilities between {{ .StartDate }} and {{ .EndDate }}</h3>
-<br/>
-In this document you will find a quick overview of your team's security status.
-<br/>
-For detailed information about vulnerabilities, affected assets and suggested actions,
-<a href="{{ .LinkToLiveReport }}">see the full Vulcan Live Report</a></div>.
-<br/><br/>
+<!-- Recommended method to center email contents. -->
+<td style="margin: 0 auto 0 auto;font-size:14pt"><table cellpadding="0" cellspacing="0" width="100%"><tr><td align="center">
+<img width="200" src="https://raw.githubusercontent.com/adevinta/vulcan-ui/master/src/images/vulcan-logo-small.png"/>
+<h1 style="margin-top:5px">Vulcan Weekly Digest</h1>
+<p>Vulcan updates for <b>{{ .TeamName }}</b> between <b>{{ .StartDate }}</b> and <b>{{ .EndDate }}</b>.</p>
+{{ if gt .ImportantFixed 0 }}
+<p>🎊 Contratulations on fixing <b>{{ .ImportantFixed }}</b> vulnerabilities with critical or high severity! 🎉</p>
+{{ end }}
 <table style="border:1px solid black;border-collapse:collapse">
 <tr style="border:1px solid black">
     <td style="border:1px solid black;padding:15px">
@@ -14,42 +13,36 @@ For detailed information about vulnerabilities, affected assets and suggested ac
     </td>
     <td style="border:1px solid black;padding:15px">
         <b>New Vulnerabilities</b><br/>
-        <i>{{ .StartDate }} - {{ .EndDate }}</i>
     </td>
     <td style="border:1px solid black;padding:15px">
-        <b>Total</b>
+        <b>Fixed Vulnerabilities</b>
+    </td>
+    <td style="border:1px solid black;padding:15px">
+        <b>Total Vulnerabilities</b>
     </td>
 </tr>
-{{ range .Severities }}
+{{ range $i, $severity := .Severities }}
     <tr style="border:1px solid black">
-        <td style="border:1px solid black;padding:15px">{{ .Description }} </td>
+        <td style="border:1px solid black;padding:15px">
+            <span style="color:{{ severityColor .Description }};margin-right:10px">&#11044;</span> {{ .Description }}
+        </td>
         <td style="border:1px solid black;padding:15px;text-align:right;color:red">{{ .NewFindings }}</td>
-        <td style="border:1px solid black;padding:15px;text-align:right;">{{ .TotalFindings }}</td>
+        <td style="border:1px solid black;padding:15px;text-align:right;color:green">{{ .FixedFindings }}</td>
+        <td style="border:1px solid black;padding:15px;text-align:right;">
+            <span style="color:{{ trendColor .NewFindings .FixedFindings }}">{{ trendArrow .NewFindings .FixedFindings }}</span> {{ .TotalFindings }}
+        </td>
     </tr>
 {{ end }}
-</table><br>
+</table>
 
-<hr/>
-<h3>Fixed vulnerabilities between {{ .StartDate }} and {{ .EndDate }}</h3>
-<br/>
-<table style="border:1px solid black;border-collapse:collapse">
-<tr style="border:1px solid black">
-    <td style="border:1px solid black;padding:15px">
-        <b>Severity</b>
-    </td>
-    <td style="border:1px solid black;padding:15px">
-        <b>FIXED Vulnerabilities</b><br/>
-        <i>{{ .StartDate }} - {{ .EndDate }}</i>
-    </td>
-</tr>
-{{ range .FixedFindings }}
-    <tr style="border:1px solid black">
-        <td style="border:1px solid black;padding:15px">{{ .Description }} </td>
-        <td style="border:1px solid black;padding:15px;text-align:right;color:green">{{ .TotalFixed }}</td>
-    </tr>
-{{ end }}
-</table><br>
+<a href="{{ .LinkToLiveReport }}">
+    <div style="background-color:purple;color:white;display:inline-block;font-size:18pt;margin-top:30px">
+		<span style="margin:30px;line-height:200%;font-weight:bold">VIEW MORE IN VULCAN</span>
+	</div>
+</a>
 
-
-<i>Copyright © 2020 Adevinta, All rights reserved.<br/>
-You are receiving this email because you signed up for the Adevinta Security Overview.</i>
+<p style="font-size:12pt;margin-top:30px"><i>
+Copyright © 2020 Adevinta. All rights reserved.<br/>
+You are receiving this email because you are listed as a recipient for {{ .TeamName }} in Vulcan.
+</i></p>
+</td></tr></table></td>

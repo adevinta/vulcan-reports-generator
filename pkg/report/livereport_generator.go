@@ -78,7 +78,11 @@ func newLiveReportGenerator(cfg liveReportGeneratorCfg, log *log.Logger) (Genera
 	if err != nil {
 		return nil, err
 	}
-	g.template = template.Must(template.New("Email").Parse(string(tmpl)))
+	g.template = template.Must(template.New("Email").Funcs(template.FuncMap{
+		"trendArrow":    trendArrow,
+		"trendColor":    trendColor,
+		"severityColor": severityColor,
+	}).Parse(string(tmpl)))
 
 	return g, nil
 }
@@ -111,37 +115,29 @@ func (g *liveReportGenerator) Print(teamInfo teamInfo, liveReportReq liveReportR
 		Description   string
 		TotalFindings int
 		NewFindings   int
-	}
-	type FixedFinding struct {
-		Description string
-		TotalFixed  int
+		FixedFindings int
 	}
 	type Report struct {
+		TeamName         string
 		StartDate        string
 		EndDate          string
 		LinkToLiveReport string
 		Severities       []Severity
-		FixedFindings    []FixedFinding
+		ImportantFixed   int
 	}
 
 	r := Report{
+		TeamName:         teamInfo.Name,
 		StartDate:        liveReportReq.DateFrom,
 		EndDate:          liveReportReq.DateTo,
 		LinkToLiveReport: liveReportReq.URL,
 		Severities: []Severity{
-			{Description: "Critical", TotalFindings: liveReportReq.Critical, NewFindings: liveReportReq.CriticalDiff},
-			{Description: "High", TotalFindings: liveReportReq.High, NewFindings: liveReportReq.HighDiff},
-			{Description: "Medium", TotalFindings: liveReportReq.Medium, NewFindings: liveReportReq.MediumDiff},
-			{Description: "Low", TotalFindings: liveReportReq.Low, NewFindings: liveReportReq.LowDiff},
-			{Description: "Informational", TotalFindings: liveReportReq.Info, NewFindings: liveReportReq.InfoDiff},
+			{Description: "Critical", TotalFindings: liveReportReq.Critical, NewFindings: liveReportReq.CriticalDiff, FixedFindings: liveReportReq.CriticalFixed},
+			{Description: "High", TotalFindings: liveReportReq.High, NewFindings: liveReportReq.HighDiff, FixedFindings: liveReportReq.HighFixed},
+			{Description: "Medium", TotalFindings: liveReportReq.Medium, NewFindings: liveReportReq.MediumDiff, FixedFindings: liveReportReq.MediumFixed},
+			{Description: "Low", TotalFindings: liveReportReq.Low, NewFindings: liveReportReq.LowDiff, FixedFindings: liveReportReq.LowFixed},
 		},
-		FixedFindings: []FixedFinding{
-			{Description: "Critical", TotalFixed: liveReportReq.CriticalFixed},
-			{Description: "High", TotalFixed: liveReportReq.HighFixed},
-			{Description: "Medium", TotalFixed: liveReportReq.MediumFixed},
-			{Description: "Low", TotalFixed: liveReportReq.LowFixed},
-			{Description: "Informational", TotalFixed: liveReportReq.InfoFixed},
-		},
+		ImportantFixed: liveReportReq.CriticalFixed + liveReportReq.HighFixed,
 	}
 
 	var output []byte
@@ -178,4 +174,39 @@ func parseLiveReportReq(liveReportData interface{}) (liveReportRequest, error) {
 		return liveReportRequest{}, ErrInvalidRequest
 	}
 	return liveReportReq, nil
+}
+
+func trendArrow(new int, fixed int) string {
+	if new > fixed {
+		return "▲"
+	} else if fixed > new {
+		return "▼"
+	} else {
+		return "="
+	}
+}
+
+func trendColor(new int, fixed int) string {
+	if new > fixed {
+		return "red"
+	} else if fixed > new {
+		return "green"
+	} else {
+		return "grey"
+	}
+}
+
+func severityColor(severity string) string {
+	switch severity {
+	case "Critical":
+		return "purple"
+	case "High":
+		return "red"
+	case "Medium":
+		return "orange"
+	case "Low":
+		return "yellow"
+	default:
+		return "black"
+	}
 }
