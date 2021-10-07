@@ -4,9 +4,6 @@ Copyright 2021 Adevinta
 
 package main
 
-//go:generate rm -rf ../../vendor/github.com/adevinta/security-overview/resources/keep.go
-//go:generate cp -pR ../../vendor/github.com/adevinta/security-overview/resources/. ../../_build/files/opt/vulcan-reports-generator/generators/scan/resources/.
-
 import (
 	"context"
 	"database/sql"

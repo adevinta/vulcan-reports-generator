@@ -1,12 +1,6 @@
 # vulcan-reports-generator
 Micro service responsible for vulcan reports generation, upload and optionally notification.
 
-### Requirements
-```
-go mod vendor
-go generate ./...
-```
-
 ### Report generation
 Report generation requests are readed from a queue, where the expected payload complies with:
 ```
