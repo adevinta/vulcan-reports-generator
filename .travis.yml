@@ -1,16 +1,10 @@
 dist: bionic
 language: go
+env:
+  - GO111MODULE="on"
 go:
-  - 1.13.3
-cache:
-  directories:
-    - "vendor/"
+  - 1.17.1
 go_import_path: github.com/adevinta/vulcan-reports-generator
-before_install:
-  - rm -rf vendor/github.com/adevinta/security-overview
-before_script:
-  - go mod vendor
-  - go generate -v ./...
 script:
   - go install -v $(go list ./... | grep -v /vendor/)
   - go test -v $(go list ./... | grep -v /vendor/)
