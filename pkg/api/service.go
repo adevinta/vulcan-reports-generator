@@ -9,7 +9,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/adevinta/vulcan-reports-generator/pkg/model"
