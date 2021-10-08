@@ -75,7 +75,6 @@ endpoint = "$RESULTS_ENDPOINT"
 endpoint = "$SCAN_PROXY_ENDPOINT"
 
 [general]
-# resources_path = "/app/resources//generators/scan/resources"
 local_temp_dir = "/app/resources//generators/scan/output"
 company_name = "$SCAN_COMPANY_NAME"
 support_email = "$SCAN_SUPPORT_EMAIL"
