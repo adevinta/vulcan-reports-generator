@@ -5,7 +5,7 @@ version: "2"
 services:
     vulcan-reportgen-db:
         container_name: vulcan-reportgen-db
-        image: postgres:10.9
+        image: postgres:alpine3.13
         command: "postgres -c log_connections=true -c log_min_duration_statement=0"
         ports:
             - "5438:5432"
