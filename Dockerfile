@@ -24,9 +24,9 @@ RUN apk add postgresql-client
 # add flyway
 RUN apk add --no-cache --update openjdk8-jre-base bash gettext libc6-compat
 RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-    && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz && mv flyway-${FLYWAY_VERSION}/* . \
+    && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip 1 \
     && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-    && find /flyway/drivers/ -type f -not -name 'postgres*' -delete \
+    && find ./drivers/ -type f -not -name 'postgres*' -delete \
     && ln -s /flyway/flyway /bin/flyway
 
 ARG BUILD_RFC3339="1970-01-01T00:00:00Z"
