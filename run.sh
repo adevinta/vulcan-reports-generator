@@ -4,7 +4,7 @@
 
 export PATH_STYLE=${PATH_STYLE:-false}
 
-cat config.toml | envsubst > run.toml
+envsubst < config.toml > .env.production
 
 if [ ! -z "$PG_CA_B64" ]; then
   mkdir /root/.postgresql
