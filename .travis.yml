@@ -6,7 +6,7 @@ env:
     - FLYWAY_VERSION=8.0.2
     - INPUT_BUILDARGS=FLYWAY_VERSION=8.0.2
 go:
-  - 1.17.1
+  - 1.17.2
 go_import_path: github.com/adevinta/vulcan-reports-generator
 script:
   - go install -v $(go list ./... | grep -v /vendor/)
