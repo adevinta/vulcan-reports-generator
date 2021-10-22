@@ -18,6 +18,6 @@ PGPASSWORD=$PG_PASSWORD psql -h "$PG_HOST" -p "$PG_PORT" postgres "$PG_USER"
 
 flyway -user="$PG_USER" -password="$PG_PASSWORD" \
   -url="jdbc:postgresql://$PG_HOST:$PG_PORT/$PG_NAME?sslmode=$PG_SSLMODE" \
-  -baselineOnMigrate=true -locations=filesystem:/app/sql migrate
+  -community -baselineOnMigrate=true -locations=filesystem:/app/sql migrate
 
-./vulcan-reports-generator -c run.toml
+exec ./vulcan-reports-generator -c run.toml
