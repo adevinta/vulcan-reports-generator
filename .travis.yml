@@ -3,7 +3,7 @@ language: go
 env:
   global:
     - GO111MODULE="on"
-    - FLYWAY_VERSION=8.0.2
+    - FLYWAY_VERSION=8.5.9
     - INPUT_BUILDARGS=FLYWAY_VERSION=8.0.2
 go:
   - 1.17.2
