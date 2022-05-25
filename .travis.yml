@@ -2,11 +2,10 @@ dist: bionic
 language: go
 env:
   global:
-    - GO111MODULE="on"
-    - FLYWAY_VERSION=8.0.2
-    - INPUT_BUILDARGS=FLYWAY_VERSION=8.0.2
+    - FLYWAY_VERSION=8.5.9
+    - INPUT_BUILDARGS=FLYWAY_VERSION=8.5.9
 go:
-  - 1.17.2
+  - 1.18.2
 go_import_path: github.com/adevinta/vulcan-reports-generator
 script:
   - go install -v $(go list ./... | grep -v /vendor/)
