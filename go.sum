@@ -12,6 +12,8 @@ github.com/adevinta/vulcan-groupie v1.0.0 h1:I02jze7rGpmwHQxrjHziULj4Ub2AWFXKHs/
 github.com/adevinta/vulcan-groupie v1.0.0/go.mod h1:37AoKMHsUlspA3HAaDjURwnOghqoQl2TczEMz8Zp0jk=
 github.com/adevinta/vulcan-metrics-client v1.0.0-rc1 h1:mcKUC5K2FTneeboBk96VXYNZFZNdCP1bQGpEUtbglP0=
 github.com/adevinta/vulcan-metrics-client v1.0.0-rc1/go.mod h1:v1lRugB/hInlu+2FC6Q7nXROve9CVAe1K3oza2tYBcQ=
+github.com/adevinta/vulcan-metrics-client v1.0.0 h1:gkWoyVESQxG+Ms/DdvDPttu96iehLtR49X+ydyvg8MU=
+github.com/adevinta/vulcan-metrics-client v1.0.0/go.mod h1:v1lRugB/hInlu+2FC6Q7nXROve9CVAe1K3oza2tYBcQ=
 github.com/adevinta/vulcan-report v1.0.0 h1:44aICPZ+4svucgCSA5KmjlT3ZGzrvZXiSnkbnj6AC2k=
 github.com/adevinta/vulcan-report v1.0.0/go.mod h1:k34KaeoXc3H77WNMwI9F4F1G28hBjB95PeMUp9oHbEE=
 github.com/aws/aws-sdk-go v1.42.34 h1:fqGAiKmCSRY1rEa4G9VqgkKKbNmLKYq5dKmLtQkvYi8=
