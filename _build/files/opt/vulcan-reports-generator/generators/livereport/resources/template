@@ -4,7 +4,7 @@
 <h1 style="margin-top:5px">Vulcan Weekly Digest</h1>
 <p>Vulcan updates for <b>{{ .TeamName }}</b> between <b>{{ .StartDate }}</b> and <b>{{ .EndDate }}</b>.</p>
 {{ if gt .ImportantFixed 0 }}
-<p>🎊 Contratulations on fixing <b>{{ .ImportantFixed }}</b> vulnerabilities with critical or high severity! 🎉</p>
+<p>🎊 Congratulations on fixing <b>{{ .ImportantFixed }}</b> vulnerabilities with critical or high severity! 🎉</p>
 {{ end }}
 <table style="border:1px solid black;border-collapse:collapse">
 <tr style="border:1px solid black">
