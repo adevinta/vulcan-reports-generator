@@ -6,6 +6,7 @@ package api
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -56,6 +57,14 @@ func (a *ReportsAPI) Start(port int) error {
 	// Healthcheck
 	a.echo.GET(healthCheckEndpoint, a.ReportsService.HealthCheck)
 
-	a.echo.Use(middleware.Logger())
+	// Middlewares
+	a.echo.Use(middleware.Recover())
+	a.echo.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		// Avoid logging healthcheck requests
+		Skipper: func(c echo.Context) bool {
+			return strings.HasPrefix(c.Path(), "/healthcheck")
+		},
+	}))
+
 	return a.echo.Start(fmt.Sprintf(":%d", port))
 }
