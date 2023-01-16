@@ -13,7 +13,7 @@ COPY . .
 
 RUN cd cmd/vulcan-reports-generator/ && GOOS=linux GOARCH=amd64 go build . && cd -
 
-FROM alpine:3.16.3
+FROM alpine:3.17.1
 
 WORKDIR /flyway
 
