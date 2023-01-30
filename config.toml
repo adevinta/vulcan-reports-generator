@@ -24,7 +24,7 @@ endpoint = "$AWS_S3_ENDPOINT"
 path_style = $PATH_STYLE
 
 [sqs]
-number_of_processors = 2
+number_of_processors = $SQS_NUM_PROCESSORS
 wait_time = 20
 timeout = 3600
 queue_arn = "$SQS_QUEUE_ARN"

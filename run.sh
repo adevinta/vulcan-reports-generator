@@ -2,7 +2,8 @@
 
 # Copyright 2021 Adevinta
 
-export PATH_STYLE=${PATH_STYLE:-false}
+export PATH_STYLE="${PATH_STYLE:-false}"
+export SQS_NUM_PROCESSORS="${SQS_NUM_PROCESSORS:-2}"
 
 envsubst < config.toml > run.toml
 

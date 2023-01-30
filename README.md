@@ -97,6 +97,7 @@ These are the variables you have to use:
 |PG_SSLMODE|one of: disable, allow, prefer, require, verify-ca, verify-full|disable|
 |PG_NAME||vulcan_reportgen|
 |SQS_QUEUE_ARN|SQS to push report generation requestsfrom vulcan-api|arn:aws:sqs:xxx:123456789012:yyy|
+|SQS_NUM_PROCESSORS|Number of processors|2|
 |SES_REGION|AWS region for SES service|xxx|
 |SES_FROM|From address to use for AWS SES|vulcan@vulcan.example.com|
 |SES_CC|Comma separated list of CC email adresses strings. E.g.: "vulcan@vulcan.example.com","reports@vulcan.example.com"||
