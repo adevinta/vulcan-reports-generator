@@ -6,7 +6,7 @@ require (
 	github.com/BurntSushi/toml v1.2.1
 	github.com/adevinta/security-overview v1.0.1
 	github.com/adevinta/vulcan-metrics-client v1.0.0
-	github.com/aws/aws-sdk-go v1.44.200
+	github.com/aws/aws-sdk-go v1.44.250
 	github.com/friendsofgo/errors v0.9.2
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/lib/pq v1.10.3
