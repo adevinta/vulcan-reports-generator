@@ -4,3 +4,4 @@ Dockerfile
 *.md
 _*
 !_build/files/opt/vulcan-reports-generator/generators
+.vscode
