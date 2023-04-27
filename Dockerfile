@@ -13,24 +13,13 @@ COPY . .
 
 RUN cd cmd/vulcan-reports-generator/ && GOOS=linux GOARCH=amd64 go build . && cd -
 
+FROM golang:1.19.3-alpine3.15 as migrations
+
+RUN GOBIN=/ go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
 FROM alpine:3.17.3
 
-WORKDIR /flyway
-
-# add psql client to create DB from run script
-RUN apk add postgresql-client
-
-# add flyway
-RUN apk add --no-cache --update openjdk8-jre-base bash gettext libc6-compat
-
-ARG FLYWAY_VERSION=9.17.0
-
-RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-    && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip 1 \
-    && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-    && find ./drivers/ -type f -not -name 'postgres*' -delete \
-    && chown -R root:root . \
-    && ln -s /flyway/flyway /bin/flyway
+RUN apk add --no-cache --update bash gettext libc6-compat postgresql-client
 
 ARG BUILD_RFC3339="1970-01-01T00:00:00Z"
 ARG COMMIT="local"
@@ -40,9 +29,9 @@ ENV COMMIT "$COMMIT"
 
 WORKDIR /app
 
-COPY db/sql /app/sql/
-
+COPY --from=migrations /migrate /bin
 COPY --from=builder /app/cmd/vulcan-reports-generator/vulcan-reports-generator .
+COPY db/migrations /app/migrations
 
 # copy generators resources, this is provided by go generate
 COPY _build/files/opt/vulcan-reports-generator/generators /app/resources/generators

@@ -12,4 +12,4 @@ user = "vulcan_reportgen"
 pass = "vulcan_reportgen"
 port = 5438
 sslmode = "disable"
-blacklist = ["flyway_schema_history"]
+blacklist = ["flyway_schema_history", "schema_migrations"]
