@@ -5,20 +5,20 @@ go 1.19
 require (
 	github.com/BurntSushi/toml v1.2.1
 	github.com/adevinta/security-overview v1.0.1
-	github.com/adevinta/vulcan-metrics-client v1.0.0
+	github.com/adevinta/vulcan-metrics-client v1.0.1
 	github.com/aws/aws-sdk-go v1.44.200
 	github.com/friendsofgo/errors v0.9.2
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/lib/pq v1.10.9
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.0
 	github.com/volatiletech/sqlboiler v3.6.1+incompatible
 )
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
 	github.com/DataDog/datadog-go v4.8.3+incompatible // indirect
-	github.com/Microsoft/go-winio v0.5.2 // indirect
+	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/adevinta/vulcan-groupie v1.0.0 // indirect
 	github.com/adevinta/vulcan-report v1.0.0 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
@@ -44,10 +44,12 @@ require (
 	github.com/volatiletech/null v8.0.0+incompatible // indirect
 	golang.org/x/crypto v0.1.0 // indirect
 	golang.org/x/image v0.7.0 // indirect
+	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/net v0.9.0 // indirect
 	golang.org/x/sys v0.7.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/time v0.1.0 // indirect
+	golang.org/x/tools v0.8.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
