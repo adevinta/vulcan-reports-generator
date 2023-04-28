@@ -95,7 +95,7 @@ These are the variables you have to use:
 |PG_USER||vulcan_reportgen|
 |PG_PASSWORD||vulcan_reportgen|
 |PG_SSLMODE|one of: disable, allow, prefer, require, verify-ca, verify-full|disable|
-|PG_NAME||vulcan_reportgen|
+|PG_NAME||reportsgenerator|
 |SQS_QUEUE_ARN|SQS to push report generation requestsfrom vulcan-api|arn:aws:sqs:xxx:123456789012:yyy|
 |SQS_NUM_PROCESSORS|Number of processors|2|
 |SES_REGION|AWS region for SES service|xxx|

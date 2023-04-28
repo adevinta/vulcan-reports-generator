@@ -14,7 +14,7 @@ port = "5438"
 user = "vulcan_reportgen"
 password = "vulcan_reportgen"
 sslmode = "disable"
-name = "vulcan_reportgen"
+name = "reportsgenerator"
 
 [sqs]
 number_of_processors = 50

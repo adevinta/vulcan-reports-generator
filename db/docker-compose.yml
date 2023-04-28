@@ -6,7 +6,7 @@ services:
     vulcan-reportgen-db:
         container_name: vulcan-reportgen-db
         image: postgres:alpine3.13
-        command: "postgres -c log_connections=true -c log_min_duration_statement=0"
+        command: "postgres -c log_connections=true -c log_min_duration_statement=0 -c log_statement=all -c log_destination=stderr"
         ports:
             - "5438:5432"
         expose:
@@ -16,7 +16,7 @@ services:
         environment:
             - POSTGRES_USER=vulcan_reportgen
             - POSTGRES_PASSWORD=vulcan_reportgen
-            - POSTGRES_DB=vulcan_reportgen
+            - POSTGRES_DB=reportsgenerator
     pgadmin:
         container_name: pgadmin
         image: dpage/pgadmin4

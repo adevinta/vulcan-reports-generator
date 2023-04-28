@@ -12,7 +12,7 @@ go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql@v3.6.1
 # start db
 source postgres-start.sh
 sleep 2
-source flyway-migrate.sh
+source migrate.sh
 
 # generate model in tmp gen folder
 # copy it to pkg/model and clean

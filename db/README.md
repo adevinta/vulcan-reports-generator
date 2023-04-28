@@ -2,7 +2,7 @@
 
 ```
 $ postgres-start.sh
-$ flyway-migrate.sh
+$ migrate.sh
 ```
 
 # Stoping the database
@@ -14,7 +14,7 @@ $ postgres-stop.sh
 # Cleaning a running database
 
 ```
-$ flyway-clean-schema.sh
+$ clean-schema.sh
 ```
 
 # Inspecting the database

@@ -15,6 +15,7 @@ cmd/vulcan-reports-generator/vulcan-reports-generator
 .glide/
 
 .idea/
+.vscode/
 vendor
 
 # VIM

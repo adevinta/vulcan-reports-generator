@@ -5,4 +5,4 @@
 source postgres-stop.sh
 source postgres-start.sh
 sleep 2
-source flyway-migrate.sh
+source migrate.sh
