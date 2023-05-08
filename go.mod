@@ -12,7 +12,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/sirupsen/logrus v1.8.1
-	github.com/volatiletech/sqlboiler v3.6.1+incompatible
+	github.com/volatiletech/sqlboiler v3.7.1+incompatible
 )
 
 require (
