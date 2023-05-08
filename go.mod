@@ -39,7 +39,7 @@ require (
 	github.com/volatiletech/inflect v0.0.1 // indirect
 	github.com/volatiletech/null v8.0.0+incompatible // indirect
 	golang.org/x/crypto v0.1.0 // indirect
-	golang.org/x/image v0.4.0 // indirect
+	golang.org/x/image v0.5.0 // indirect
 	golang.org/x/net v0.9.0 // indirect
 	golang.org/x/sys v0.7.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
