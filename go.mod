@@ -11,7 +11,7 @@ require (
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/lib/pq v1.10.9
 	github.com/mitchellh/mapstructure v1.1.2
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.0
 	github.com/volatiletech/sqlboiler v3.7.1+incompatible
 )
 
