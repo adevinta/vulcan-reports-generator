@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go v1.44.262
 	github.com/friendsofgo/errors v0.9.2
 	github.com/labstack/echo/v4 v4.9.1
-	github.com/lib/pq v1.10.3
+	github.com/lib/pq v1.10.9
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/sirupsen/logrus v1.8.1
 	github.com/volatiletech/sqlboiler v3.6.1+incompatible
