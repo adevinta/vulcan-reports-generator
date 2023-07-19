@@ -18,9 +18,6 @@ const (
 	// NotifFmtText indicates notification has Text format.
 	NotifFmtText
 
-	// ScanType identifies the scan report type.
-	ScanType = "scan"
-
 	// LiveReportType identifies the live report type.
 	LiveReportType = "livereport"
 
@@ -39,7 +36,6 @@ type ReportType string
 // which all report types must comply with.
 type Report interface {
 	GetID() string
-	GetFiles() []FileInfo
 	GetNotification() Notification
 	GetDeliveredTo() []string
 	GetStatus() string
@@ -51,7 +47,6 @@ type Report interface {
 // fields for all types of reports.
 type BaseReport struct {
 	ID           string
-	Files        []FileInfo
 	Notification Notification
 	DeliveredTo  []string
 	Status       string

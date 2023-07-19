@@ -29,18 +29,6 @@ cc = []
 
 [generators]
 
-    [generators.scan]
-    # printer_cfg_file is the cfg file
-    # to pass on to secoverview library.
-    printer_cfg_file = "../../_build/files/opt/vulcan-reports-generator/generators/scan/config/local.toml"
-    email_subject = "[Test] Security Overview"
-    # WARNING: Following parameters must match the ones
-    # specified in the security overview config file.
-    output_dir = "../../_build/files/opt/vulcan-reports-generator/generators/scan/output"
-    public_bucket = "public-vulcan-insights-abcdefghij"
-    private_bucket = "vulcan-insights-abcdfeghij"
-
-
     [generators.livereport]
     email_subject = "[Test] Live Report"
     email_template_file = '../../_build/files/opt/vulcan-reports-generator/generators/livereport/resources/template'

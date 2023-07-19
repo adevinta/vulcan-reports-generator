@@ -19,10 +19,6 @@ func (r *LiveReport) GetID() string {
 	return r.ID
 }
 
-func (r *LiveReport) GetFiles() []FileInfo {
-	return r.Files
-}
-
 func (r *LiveReport) GetNotification() Notification {
 	return r.Notification
 }
