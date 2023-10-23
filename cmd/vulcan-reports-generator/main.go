@@ -15,8 +15,6 @@ import (
 	metrics "github.com/adevinta/vulcan-metrics-client"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/aws/aws-sdk-go/service/ses"
 	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
@@ -27,7 +25,6 @@ import (
 	"github.com/adevinta/vulcan-reports-generator/pkg/queue"
 	"github.com/adevinta/vulcan-reports-generator/pkg/report"
 	"github.com/adevinta/vulcan-reports-generator/pkg/storage"
-	"github.com/adevinta/vulcan-reports-generator/pkg/upload"
 )
 
 const (
@@ -52,18 +49,6 @@ func main() {
 
 	// Build AWS session.
 	awsSess := session.Must(session.NewSession())
-
-	// Build uploader.
-	if conf.S3.Region == "" {
-		conf.S3.Region = defRegion
-	}
-	s3Config := &aws.Config{
-		Region: aws.String(conf.S3.Region),
-	}
-	if conf.S3.Endpoint != "" {
-		s3Config.WithEndpoint(conf.S3.Endpoint).WithS3ForcePathStyle(conf.S3.PathStyle)
-	}
-	uploader := upload.NewS3Uploader(s3manager.NewUploaderWithClient(s3.New(awsSess, s3Config)), logger)
 
 	// Build notifier.
 	if conf.SES.Region == "" {
@@ -121,7 +106,7 @@ func main() {
 	}
 
 	// Build processor.
-	processor, err := report.NewProcessor(logger, generateUCC, uploader, notifier, metricsClient)
+	processor, err := report.NewProcessor(logger, generateUCC, notifier, metricsClient)
 	if err != nil {
 		logger.WithError(err).Fatal("Error creating queue processor")
 	}

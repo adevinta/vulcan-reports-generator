@@ -47,45 +47,6 @@ func NewReportsService(log *log.Logger, notifier notify.Notifier,
 	}
 }
 
-// GetReport returns the report for the specified type and id.
-func (s *ReportsService) GetReport(c echo.Context) error {
-	id := c.Param("id")
-	typ := model.ReportType(c.Param("type"))
-
-	ctx := context.Background()
-
-	r, ok := s.repositories[typ]
-	if !ok {
-		return echo.NewHTTPError(http.StatusUnprocessableEntity, unSupportedReportType)
-	}
-
-	var err error
-	var report model.Report
-	// scan reports are requested by scan_id
-	// so we have to cast repository to scan
-	// type so we can use a non-interface method.
-	if typ == model.ScanType {
-		r := r.(*storage.ScanReportsRepository)
-		report, err = r.GetReportByScanID(ctx, id)
-	} else {
-		report, err = r.GetReport(ctx, id)
-	}
-
-	if err != nil {
-		if errors.Is(err, storage.ErrReportNotFound) {
-			return echo.NewHTTPError(http.StatusNotFound)
-		}
-		return err
-	}
-
-	respDTO, err := toReportDTO(typ, report)
-	if err != nil {
-		return err
-	}
-
-	return c.JSON(http.StatusOK, respDTO)
-}
-
 // GetReportNotification returns the report's notification data for the specified type and id.
 func (s *ReportsService) GetReportNotification(c echo.Context) error {
 	id := c.Param("id")
@@ -98,18 +59,7 @@ func (s *ReportsService) GetReportNotification(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, unSupportedReportType)
 	}
 
-	var err error
-	var report model.Report
-	// scan reports are requested by scan_id
-	// so we have to cast repository to scan
-	// type so we can use a non-interface method.
-	if typ == model.ScanType {
-		r := r.(*storage.ScanReportsRepository)
-		report, err = r.GetReportByScanID(ctx, id)
-	} else {
-		report, err = r.GetReport(ctx, id)
-	}
-
+	report, err := r.GetReport(ctx, id)
 	if err != nil {
 		if errors.Is(err, storage.ErrReportNotFound) {
 			return echo.NewHTTPError(http.StatusNotFound)
@@ -143,18 +93,7 @@ func (s *ReportsService) SendReport(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, unSupportedReportType)
 	}
 
-	var err error
-	var report model.Report
-	// scan reports are requested by scan_id
-	// so we have to cast repository to scan
-	// type so we can use a non-interface method.
-	if typ == model.ScanType {
-		r := r.(*storage.ScanReportsRepository)
-		report, err = r.GetReportByScanID(ctx, id)
-	} else {
-		report, err = r.GetReport(ctx, id)
-	}
-
+	report, err := r.GetReport(ctx, id)
 	if err != nil {
 		if errors.Is(err, storage.ErrReportNotFound) {
 			return echo.NewHTTPError(http.StatusNotFound)

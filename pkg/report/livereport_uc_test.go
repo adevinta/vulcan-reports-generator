@@ -13,7 +13,46 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/adevinta/vulcan-reports-generator/pkg/model"
+	"github.com/adevinta/vulcan-reports-generator/pkg/storage"
 )
+
+var (
+	errMockGet  = errors.New("ErrMockGet")
+	errMockSave = errors.New("ErrMockSave")
+)
+
+// Generator mock.
+type mockGenFunc func(ctx context.Context, teamInfo teamInfo, reportData interface{}) (interface{}, error)
+type mockGenerator struct {
+	Generator
+	mockFunc mockGenFunc
+}
+
+func (g *mockGenerator) Generate(ctx context.Context, teamInfo teamInfo, reportData interface{}) (interface{}, error) {
+	return g.mockFunc(ctx, teamInfo, reportData)
+}
+
+// Repository mock.
+type mockGetFunc func(ctx context.Context, reportID string) (model.Report, error)
+type mockSaveFunc func(ctx context.Context, report model.Report) error
+type mockReportsRepository struct {
+	storage.ReportsRepository
+	mockGetFunc  mockGetFunc
+	mockSaveFunc mockSaveFunc
+}
+
+func (r *mockReportsRepository) GetReport(ctx context.Context, reportID string) (model.Report, error) {
+	return r.mockGetFunc(ctx, reportID)
+}
+
+func (r *mockReportsRepository) SaveReport(ctx context.Context, report model.Report) error {
+	return r.mockSaveFunc(ctx, report)
+}
+
+type fields struct {
+	generator  Generator
+	repository storage.ReportsRepository
+}
 
 func TestGenerateUCLiveReport(t *testing.T) {
 	testCases := []struct {

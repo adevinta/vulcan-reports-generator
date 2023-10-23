@@ -42,9 +42,6 @@ func NewReportsAPI(reportsService *ReportsService) *ReportsAPI {
 
 // Start starts ReportsAPI to listen on specified port.
 func (a *ReportsAPI) Start(port int) error {
-	// Get Report: GET /reports/{type}/{id}
-	getReportEndpoint := fmt.Sprintf(endpointFmt, api, version, getReportPath)
-	a.echo.GET(getReportEndpoint, a.ReportsService.GetReport)
 
 	// Get Report's notification: GET /reports/{type}/{id}/notification
 	getReportNotifEndpoint := fmt.Sprintf(endpointFmt, api, version, getReportNotifPath)

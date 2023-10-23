@@ -13,6 +13,10 @@ import (
 	"github.com/adevinta/vulcan-reports-generator/pkg/model"
 )
 
+const (
+	comma = ","
+)
+
 var (
 	// ErrInvalidRepositoryType indicates that the specified repository type is not valid.
 	ErrInvalidRepositoryType = errors.New("Invalid repository type")
@@ -33,8 +37,6 @@ type ReportsRepository interface {
 // for the specified type.
 func NewReportsRepository(typ string, db *sql.DB) (ReportsRepository, error) {
 	switch typ {
-	case model.ScanType:
-		return newScanReportsRepository(db), nil
 	case model.LiveReportType:
 		return newLiveReportsRepository(db), nil
 	default:

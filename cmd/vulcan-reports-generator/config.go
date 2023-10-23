@@ -20,7 +20,6 @@ type config struct {
 	API        apiConfig
 	DB         dbConfig
 	SQS        sqsConfig
-	S3         s3Config `toml:"aws3"`
 	SES        notify.SESConfig
 	Generators map[string]interface{}
 }
@@ -47,12 +46,6 @@ type dbConfig struct {
 type sqsConfig struct {
 	queue.SQSConfig
 	NProcessors uint8 `toml:"number_of_processors"`
-}
-
-type s3Config struct {
-	Region    string `toml:"region"`
-	Endpoint  string `toml:"endpoint"`
-	PathStyle bool   `toml:"path_style"`
 }
 
 func parseConfig(cfgFilePath string) (*config, error) {

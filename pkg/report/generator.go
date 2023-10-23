@@ -33,13 +33,6 @@ func NewGenerator(typ string, config interface{}, log *log.Logger, db *sql.DB) (
 	var generator Generator
 
 	switch typ {
-	case model.ScanType:
-		cfg := scanGeneratorCfg{}
-		err := mapstructure.Decode(config, &cfg)
-		if err != nil {
-			return nil, ErrInvalidConfiguration
-		}
-		generator = newScanGenerator(cfg, log, newScanPrinter(cfg.PrinterCfgFile))
 	case model.LiveReportType:
 		cfg := liveReportGeneratorCfg{}
 		err := mapstructure.Decode(config, &cfg)

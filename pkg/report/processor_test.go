@@ -15,16 +15,14 @@ import (
 
 	"github.com/adevinta/vulcan-reports-generator/pkg/model"
 	"github.com/adevinta/vulcan-reports-generator/pkg/notify"
-	"github.com/adevinta/vulcan-reports-generator/pkg/upload"
 )
 
 var (
 	errMockGen    = errors.New("ErrGen")
-	errMockUpload = errors.New("ErrUpload")
 	errMockNotify = errors.New("ErrNotify")
 	errMockFinish = errors.New("ErrFinish")
 
-	mockReport = &model.ScanReport{
+	mockReport = &model.LiveReport{
 		BaseReport: model.BaseReport{
 			ID:     "1",
 			Status: model.StatusGenerating,
@@ -32,13 +30,6 @@ var (
 				Subject: "NotifSubject",
 				Body:    "NotifBody",
 				Fmt:     model.NotifFmtHTML,
-			},
-			Files: []model.FileInfo{
-				{
-					FilePath:   "FilePath",
-					DestBucket: "DestBucket",
-					DestPath:   "DestPath",
-				},
 			},
 		},
 	}
@@ -59,17 +50,6 @@ func (g *mockGenerateUC) Generate(ctx context.Context, teamInfo teamInfo, report
 
 func (g *mockGenerateUC) Finish(ctx context.Context, reportID, status string) error {
 	return g.mockFinishFunc(ctx, reportID, status)
-}
-
-// Uploader mock.
-type mockUploadFunc func(files []model.FileInfo) error
-type mockUploader struct {
-	upload.Uploader
-	mockFunc mockUploadFunc
-}
-
-func (u *mockUploader) Upload(files []model.FileInfo) error {
-	return u.mockFunc(files)
 }
 
 // Notifier mock.
@@ -97,7 +77,6 @@ func TestProcess(t *testing.T) {
 	type fields struct {
 		log           *log.Logger
 		generateUCC   map[model.ReportType]GenerateUC
-		uploader      upload.Uploader
 		notifier      notify.Notifier
 		metricsClient metrics.Client
 	}
@@ -185,15 +164,6 @@ func TestProcess(t *testing.T) {
 						},
 					},
 				},
-				uploader: &mockUploader{
-					mockFunc: func(files []model.FileInfo) error {
-						// Verify input files matches returned mock data from Generate.
-						if !reflect.DeepEqual(files, mockReport.Files) {
-							return errors.New("upload input files do not match mock report")
-						}
-						return nil
-					},
-				},
 				notifier: &mockNotifier{
 					mockFunc: func(subject, mssg string, fmt model.NotifFmt, recipients []string) error {
 						// Verify input notif matches returned mock data from Generate.
@@ -248,15 +218,6 @@ func TestProcess(t *testing.T) {
 							}
 							return nil
 						},
-					},
-				},
-				uploader: &mockUploader{
-					mockFunc: func(files []model.FileInfo) error {
-						// Verify input files matches returned mock data from Generate.
-						if !reflect.DeepEqual(files, mockReport.Files) {
-							return errors.New("upload input files do not match mock report")
-						}
-						return nil
 					},
 				},
 				notifier: &mockNotifier{
@@ -314,53 +275,6 @@ func TestProcess(t *testing.T) {
 			expectedErr:         errMockGen,
 		},
 		{
-			name: "Should return ErrMockUpload",
-			fields: fields{
-				log: log,
-				generateUCC: map[model.ReportType]GenerateUC{
-					"scan": &mockGenerateUC{
-						mockGenerateFunc: func(ctx context.Context, teamInfo teamInfo, reportData interface{}) (model.Report, error) {
-							// Return mock report.
-							return mockReport, nil
-						},
-						mockFinishFunc: func(ctx context.Context, reportID, status string) error {
-							// Verify input reportID matches returned mock data from Generate.
-							if reportID != mockReport.ID {
-								return errors.New("reportID does not match returned mock report ID")
-							}
-							// Verify input status is failed.
-							if status != model.StatusFailed {
-								return errors.New("status is not set to FAILED after error")
-							}
-							return nil
-						},
-					},
-				},
-				uploader: &mockUploader{
-					mockFunc: func(files []model.FileInfo) error {
-						// Return Err.
-						return errMockUpload
-					},
-				},
-				metricsClient: &mockMetricsClient{},
-			},
-			input: `
-			{
-				"team_info": {
-					"id": "1",
-					"name": "myTeam",
-					"recipients": []
-				},
-				"data": {
-					"scan_id": "1",
-					"program_name": "progName"
-				},
-				"type": "scan"
-			}`,
-			expectedMetricCalls: 0,
-			expectedErr:         errMockUpload,
-		},
-		{
 			name: "Should return ErrMockNotify",
 			fields: fields{
 				log: log,
@@ -381,12 +295,6 @@ func TestProcess(t *testing.T) {
 							}
 							return nil
 						},
-					},
-				},
-				uploader: &mockUploader{
-					mockFunc: func(files []model.FileInfo) error {
-						// All good.
-						return nil
 					},
 				},
 				notifier: &mockNotifier{
@@ -422,18 +330,12 @@ func TestProcess(t *testing.T) {
 					"scan": &mockGenerateUC{
 						mockGenerateFunc: func(ctx context.Context, teamInfo teamInfo, reportData interface{}) (model.Report, error) {
 							// All good.
-							return &model.ScanReport{}, nil
+							return &model.LiveReport{}, nil
 						},
 						mockFinishFunc: func(ctx context.Context, reportID, status string) error {
 							// Return Err.
 							return errMockFinish
 						},
-					},
-				},
-				uploader: &mockUploader{
-					mockFunc: func(files []model.FileInfo) error {
-						// All good.
-						return nil
 					},
 				},
 				notifier: &mockNotifier{
@@ -465,7 +367,7 @@ func TestProcess(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			processor, err := NewProcessor(tc.fields.log, tc.fields.generateUCC, tc.fields.uploader, tc.fields.notifier, tc.fields.metricsClient)
+			processor, err := NewProcessor(tc.fields.log, tc.fields.generateUCC, tc.fields.notifier, tc.fields.metricsClient)
 			if err != nil {
 				t.Fatalf("Error building processor: %v", err)
 			}
