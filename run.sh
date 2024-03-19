@@ -2,6 +2,8 @@
 
 # Copyright 2021 Adevinta
 
+set -e
+
 export PATH_STYLE="${PATH_STYLE:-false}"
 export SQS_NUM_PROCESSORS="${SQS_NUM_PROCESSORS:-2}"
 export GOMEMLIMIT=${GOMEMLIMIT:-1GiB}
