@@ -5,7 +5,7 @@ Copyright 2021 Adevinta
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -55,7 +55,7 @@ func parseConfig(cfgFilePath string) (*config, error) {
 	}
 	defer cfgFile.Close()
 
-	cfgData, err := ioutil.ReadAll(cfgFile)
+	cfgData, err := io.ReadAll(cfgFile)
 	if err != nil {
 		return nil, err
 	}
