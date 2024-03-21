@@ -6,7 +6,7 @@ package report
 
 import (
 	"context"
-	"io/ioutil"
+	"os"
 	"reflect"
 	"testing"
 
@@ -15,7 +15,7 @@ import (
 )
 
 func TestGenerateLiveReport(t *testing.T) {
-	ioutil.WriteFile("/tmp/template", []byte("notif"), 0x755)
+	os.WriteFile("/tmp/template", []byte("notif"), 0x755)
 
 	mockCfg := liveReportGeneratorCfg{
 		EmailSubject:      "[UnitTest] Live Report",

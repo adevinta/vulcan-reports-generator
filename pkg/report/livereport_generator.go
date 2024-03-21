@@ -9,7 +9,6 @@ import (
 	"context"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -74,7 +73,7 @@ func newLiveReportGenerator(cfg liveReportGeneratorCfg, log *log.Logger) (Genera
 	if err != nil {
 		return nil, err
 	}
-	tmpl, err := ioutil.ReadFile(tmplPath)
+	tmpl, err := os.ReadFile(tmplPath)
 	if err != nil {
 		return nil, err
 	}
