@@ -2,6 +2,8 @@
 
 # Copyright 2021 Adevinta
 
+set -e
+
 export PATH_STYLE="${PATH_STYLE:-false}"
 export SQS_NUM_PROCESSORS="${SQS_NUM_PROCESSORS:-2}"
 export GOMEMLIMIT=${GOMEMLIMIT:-1GiB}
@@ -20,6 +22,6 @@ PGPASSWORD=$PG_PASSWORD psql -h "$PG_HOST" -p "$PG_PORT" postgres "$PG_USER"
 
 flyway -user="$PG_USER" -password="$PG_PASSWORD" \
   -url="jdbc:postgresql://$PG_HOST:$PG_PORT/$PG_NAME?sslmode=$PG_SSLMODE" \
-  -community -baselineOnMigrate=true -locations=filesystem:/app/sql migrate
+  -baselineOnMigrate=true -locations=filesystem:/app/sql migrate
 
 exec ./vulcan-reports-generator -c run.toml
