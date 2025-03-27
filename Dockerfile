@@ -1,6 +1,6 @@
 # Copyright 2021 Adevinta
 
-FROM golang:1.19-alpine3.18 as builder
+FROM --platform=$BUILDPLATFORM golang:1.24-alpine AS builder
 
 WORKDIR /app
 
@@ -11,38 +11,30 @@ RUN go mod download
 
 COPY . .
 
-RUN cd cmd/vulcan-reports-generator/ && GOOS=linux GOARCH=amd64 go build . && cd -
+ARG TARGETOS TARGETARCH
 
-FROM alpine:3.18.3
+RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build ./cmd/vulcan-reports-generator
+
+FROM alpine:3.21
 
 WORKDIR /flyway
 
-# add psql client to create DB from run script
-RUN apk add postgresql-client
-
-# add flyway
-RUN apk add --no-cache --update openjdk17-jre bash gettext libc6-compat
+RUN apk add --no-cache postgresql-client openjdk17-jre bash gettext libc6-compat
 
 ARG FLYWAY_VERSION=10.10.0
 
 RUN wget -q https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
     && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip 1 \
     && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-    && find ./drivers/ -type f | grep -Ev '(postgres|jackson)' | xargs rm \
+    && find ./drivers/ -type f -not -name '*postgres*' -not -name '*jackson*' -delete \
     && chown -R root:root . \
     && ln -s /flyway/flyway /bin/flyway
-
-ARG BUILD_RFC3339="1970-01-01T00:00:00Z"
-ARG COMMIT="local"
-
-ENV BUILD_RFC3339 "$BUILD_RFC3339"
-ENV COMMIT "$COMMIT"
 
 WORKDIR /app
 
 COPY db/sql /app/sql/
 
-COPY --from=builder /app/cmd/vulcan-reports-generator/vulcan-reports-generator .
+COPY --from=builder /app/vulcan-reports-generator .
 
 # copy generators resources, this is provided by go generate
 COPY _build/files/opt/vulcan-reports-generator/generators /app/resources/generators
