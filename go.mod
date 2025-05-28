@@ -3,7 +3,7 @@ module github.com/adevinta/vulcan-reports-generator
 go 1.23.0
 
 require (
-	github.com/BurntSushi/toml v1.2.1
+	github.com/BurntSushi/toml v1.5.0
 	github.com/adevinta/vulcan-metrics-client v1.0.1
 	github.com/aws/aws-sdk-go v1.44.262
 	github.com/friendsofgo/errors v0.9.2
